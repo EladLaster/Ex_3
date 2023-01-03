@@ -33,10 +33,10 @@ int main(){
 
 
     for (int i = 0; i < length-1; i++)    {
-        printf("%d,",arr[i]);
+        printf("%d,",*(arr+i));
         
     }
-    printf("%d\n",arr[length-1]);
+    printf("%d\n",*(arr+length-1));
 
     return 0;
     }
