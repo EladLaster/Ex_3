@@ -1,33 +1,33 @@
 #include <stdio.h>
 #include <string.h>
 
-#define WORD 30
-#define LINE 256
-#define MAXLINES 250
+#define NUM_OF_LINES 250
+#define LINE_SIZE 256
+#define WORD_SIZE 30
 
 int getLine(char s[]){
-    int i=0;
-    scanf("%c",&s[i]);
-    while(i<LINE && s[i] != '\n'){
-        i++;
-        if(scanf("%c",&s[i])==EOF) 
+    scanf("%c",&s[0]);
+    int counter=0;
+    while(counter<LINE_SIZE && s[counter] != '\n'){
+        counter++;
+        if(scanf("%c",&s[counter])==EOF) 
         return 0;
         }
-        s[i]='\0';
-        return (i+1);
+        s[counter]='\0';
+        return (counter+1);
     }
 
 
 int getWord(char w[]){
-    int i=0;
-    scanf("%c",&w[i]);
-    while(i<WORD && w[i] != '\n' && w[i] != '\t' && w[i] != ' '){
-        i++;
-        if(scanf("%c",&w[i])==EOF) 
+    scanf("%c",&w[0]);
+    int counter=0;
+    while(counter<WORD_SIZE && w[counter] != '\n' && w[counter] != '\t' && w[counter] != ' '){
+        counter++;
+        if(scanf("%c",&w[counter])==EOF) 
         return 0;
         }
-        w[i]='\0';
-        return (i+1);
+        w[counter]='\0';
+        return (counter+1);
     }
 
 
@@ -112,17 +112,16 @@ int similar (char *s, char *t, int n){
 
 void print_lines(char * str){
 
-char line[LINE]={0};
-    int size;
+char l[LINE_SIZE]={0};
+int size;
 
-    for (int i = 0; i < MAXLINES; i++){
-        size=getLine(line);
-
+    for (int i = 0; i < NUM_OF_LINES; i++){
+        size=getLine(l);
         if(size==0)
         break;
 
-        if(substring(line,str)==1)
-             printf("%s\n", line);
+        if(substring(l,str)==1)
+             printf("%s\n", l);
 }
 
 }
@@ -130,33 +129,32 @@ char line[LINE]={0};
 
 void print_similar_words(char * str){
 
-char check[WORD]={0};
+char c[WORD_SIZE]={0};
     int size;
-    for (int i = 0; i < MAXLINES; i++){
-        size=getWord(check);
-
+    for (int i = 0; i < NUM_OF_LINES; i++){
+        size=getWord(c);
         if(size==0)
         break;
 
-        if(similar(check,str,1)==1 ||strcmp(check,str)==0)
-                printf("%s\n", check);
-
-        
+        if(similar(c,str,1)==1 || strcmp(c,str)==0)
+                printf("%s\n", c);
     }
 }
 
 int main(){
-    char word[WORD]={0};
-    getWord(word);
-    char function[WORD]={0};
-    getWord(function);
-
-    if(function[0]=='a')
-    print_lines(word);
-
-    if(function[0]=='b')
-    print_similar_words(word);
-
+    char ward[WORD_SIZE];
+    char options;
+    getWord(ward);
+    scanf("%c\n", &options);
+    switch (options)
+    {
+    case 'a':
+        print_lines(ward);
+        break;
+    
+    case 'b':
+        print_similar_words(ward);
+        break;
+    }
     return 0;
 }
-
