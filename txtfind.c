@@ -1,33 +1,37 @@
 #include <stdio.h>
 #include <string.h>
 
+#define MAX_WORD_SIZE 30
+#define MAX_LINE_SIZE 256
 #define NUM_OF_LINES 250
-#define LINE_SIZE 256
-#define WORD_SIZE 30
 
 int getLine(char s[]){
-    scanf("%c",&s[0]);
+    
     int counter=0;
-    while(counter<LINE_SIZE && s[counter] != '\n'){
+    for(int i=0;i<MAX_LINE_SIZE;i++){
+        scanf("%c",&s[i]);
         counter++;
-        if(scanf("%c",&s[counter])==EOF) 
-        return 0;
+        if(s[i]=='\n') {
+            s[i]='\0';
+            break;
         }
-        s[counter]='\0';
-        return (counter+1);
+        }
+        return counter;
     }
 
 
 int getWord(char w[]){
-    scanf("%c",&w[0]);
+
     int counter=0;
-    while(counter<WORD_SIZE && w[counter] != '\n' && w[counter] != '\t' && w[counter] != ' '){
+    for(int i=0;i<MAX_WORD_SIZE;i++){
+        scanf("%c",&w[i]);
         counter++;
-        if(scanf("%c",&w[counter])==EOF) 
-        return 0;
+        if(w[i]==' '||w[i]=='\t'||w[i]=='\n') {
+            w[i]='\0';
+            break;
         }
-        w[counter]='\0';
-        return (counter+1);
+        }
+        return counter;
     }
 
 
@@ -111,38 +115,35 @@ int similar (char *s, char *t, int n){
 
 
 void print_lines(char * str){
-
-char l[LINE_SIZE]={0};
-int size;
-
-    for (int i = 0; i < NUM_OF_LINES; i++){
-        size=getLine(l);
-        if(size==0)
-        break;
-
-        if(substring(l,str)==1)
-             printf("%s\n", l);
-}
-
+    int i=0;
+    int line_size=1;
+    char text[MAX_LINE_SIZE]={0};
+    while(line_size!=0 && i<MAX_LINE_SIZE){
+        line_size=getLine(text);
+        if(substring(text,str)==1){
+            printf("%s\n",text);
+        }
+        i++;
+    }
 }
 
 
 void print_similar_words(char * str){
 
-char c[WORD_SIZE]={0};
-    int size;
-    for (int i = 0; i < NUM_OF_LINES; i++){
-        size=getWord(c);
-        if(size==0)
-        break;
-
-        if(similar(c,str,1)==1 || strcmp(c,str)==0)
-                printf("%s\n", c);
+    int i=0;
+    int ward_size=1;
+    char text[MAX_WORD_SIZE]={0};
+    while(ward_size!=0 && i<MAX_WORD_SIZE){
+        ward_size=getWord(text);
+        if(similar(text,str,1)==1||similar(text,str,0)){
+            printf("%s\n",text);
+        }
+        i++;
     }
 }
 
 int main(){
-    char ward[WORD_SIZE];
+    char ward[MAX_WORD_SIZE];
     char options;
     getWord(ward);
     scanf("%c\n", &options);
@@ -158,3 +159,4 @@ int main(){
     }
     return 0;
 }
+
